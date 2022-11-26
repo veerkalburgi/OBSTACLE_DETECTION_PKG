@@ -1,0 +1,14 @@
+high_fidelity: true
+target_frame: camera_depth_optical_frame
+scan_filter_chain:
+- name: range
+  type: LaserScanRangeFilter
+  params:
+    lower_threshold: 0.0
+    upper_threshold: 4.0
+- name: intensity
+  type: LaserScanIntensityFilter
+  params:
+    lower_threshold: 700
+    upper_threshold: 2000
+    disp_histogram: 0
