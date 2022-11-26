@@ -9,7 +9,7 @@ roslaunch obstacle_detection obstacle_detection_node.launch
 ```
 
 ## Parameters
-Parameters have been moved to  `your_robot_parameters/robots/<robot_name>/obstacle_detection_params.yaml`
+Parameters have been moved to  `my_robot_parameters/robots/<robot_name>/obstacle_detection_params.yaml`
 
 `minimum_obstacle_size`: Minimum size of obstacle in meters want to detect
 
