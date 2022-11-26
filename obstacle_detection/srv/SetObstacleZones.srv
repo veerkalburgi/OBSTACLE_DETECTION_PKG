@@ -1,0 +1,5 @@
+int16 zone_id
+string zone_name
+---
+string report
+bool success

@@ -1,0 +1,4 @@
+<launch>
+	<node name="obstacle_detection_node" pkg="obstacle_detection" type="obstacle_detection_node" output="screen"/>
+	<rosparam command="load" file="$(find novus_parameters)/default_robot/obstacle_detection_params.yaml"/>
+</launch>

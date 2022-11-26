@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--group ns="rs1"-->
+<launch>
+<group ns="rs1">
+  <node pkg="nodelet" type="nodelet" name="pcl_manager" args="manager" output="screen"/>
+
+  <!-- Run a VoxelGrid filter to clean NaNs and downsample the data -->
+  <node pkg="nodelet" type="nodelet" name="voxel_grid" args="load pcl/VoxelGrid pcl_manager" output="screen" >
+    <remap from="~input" to="/camera_front/depth/color/points" />
+     <remap from="~output" to="/voxel_1/depth/points" />
+    <rosparam file="$(find novus_parameters)/default_robot/front_voxel.yaml" command="load"/>
+  </node>
+<!--/launch-->
+      <!-- PCL Manager -->
+    <node pkg="nodelet" type="nodelet" name="cropbox_filter_pcl_manager" args="manager" output="screen"/>
+
+    <!-- A CropBox filter to avoid self-detection -->
+    <node pkg="nodelet" type="nodelet" name="cropbox" args="load pcl/CropBox cropbox_filter_pcl_manager" output="screen">
+      <remap from="~input" to="/voxel_1/depth/points" />
+      <remap from="~output" to="/cropped_voxel_1/depth/points" />
+      <rosparam file="$(find novus_parameters)/default_robot/front_voxel_cropped.yaml" command="load"/>
+    </node>
+
+</group>
+
+<group ns="rs2">
+<!--launch-->
+  <node pkg="nodelet" type="nodelet" name="pcl_manager" args="manager" output="screen"/>
+
+  <!-- Run a VoxelGrid filter to clean NaNs and downsample the data -->
+  <node pkg="nodelet" type="nodelet" name="voxel_grid" args="load pcl/VoxelGrid pcl_manager" output="screen" >
+    <remap from="~input" to="/camera_back/depth/color/points" />
+    <remap from="~output" to="/voxel_2/depth/points" />
+    <rosparam file="$(find novus_parameters)/default_robot/back_voxel.yaml" command="load"/>
+  </node>
+<!--/launch-->
+
+	<node pkg="nodelet" type="nodelet" name="cropbox_filter_pcl_manager" args="manager" output="screen"/>
+
+    <!-- A CropBox filter to avoid self-detection -->
+    <node pkg="nodelet" type="nodelet" name="cropbox" args="load pcl/CropBox cropbox_filter_pcl_manager" output="screen">
+      <remap from="~input" to="/voxel_2/depth/points" />
+      <remap from="~output" to="/cropped_voxel_2/depth/points" />
+      <rosparam file="$(find novus_parameters)/default_robot/back_voxel_cropped.yaml" command="load"/>
+    </node>
+
+</group>
+</launch>
